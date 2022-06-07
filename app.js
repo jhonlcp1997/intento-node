@@ -12,6 +12,11 @@ app.get('/', (req, res)=>{
 
 const port = process.env.PORT || 3001;
 
+/* 
+* Aqui invocamos las rutas
+*/
+app.use('/api', require('./routes'))
+
 app.listen(port, () => {
    console.log(' http://localhost:'+ port) ;
 });
