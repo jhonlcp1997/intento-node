@@ -1,12 +1,11 @@
 const express = require('express');
+const { getItems, getItem, createItem } = require('../controllers/tracks');
 const router = express.Router();
 
 // Todo: http://localhost/tracks GET, POST, DELETE, PUT
 
-router.get('/', (req, res)=>{
-    const data = ["hola","mundo"];
+router.get('/', getItems);
 
-    res.send({data})
-})
+router.post('/', createItem);
 
 module.exports = router //* que no se te ovlide esto
