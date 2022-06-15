@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'); //*Siempre se va a requerir mongoose
 
 const StorageScheme = new mongoose.Schema(
     {
@@ -10,9 +10,10 @@ const StorageScheme = new mongoose.Schema(
         }
     },
     {
+        // *Ponlo tal y como esta en esta parte
         timestamps:true , //createAt, UpdateAt
         versionKey: false
     }
 );
 
-module.exports = mongoose.model("storages", StorageScheme)
+module.exports = mongoose.model("storages", StorageScheme) //*Exporta el modelo de mongose con el nombre y su esquema

@@ -22,4 +22,4 @@ app.listen(port, () => {
    console.log(' http://localhost:'+ port) ;
 });
 
-dbConnect()
+dbConnect() //*ejecutamos la funcion que conecta a la base de datos

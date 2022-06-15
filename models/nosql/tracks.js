@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"); //*siempe se va a requerir
 
 const TracksScheme = new mongoose.Schema(
-{
+  {
     name: {
       type: String,
     },
@@ -41,9 +41,10 @@ const TracksScheme = new mongoose.Schema(
     },
   },
   {
+    // *Ponlo tal y como esta en esta parte
     versionKey: false,
     timestamps: true,
   }
 );
 
-module.exports = mongoose.model("tracks", TracksScheme);
+module.exports = mongoose.model("tracks", TracksScheme); //*Exporta el modelo de mongose con el nombre y su esquema
