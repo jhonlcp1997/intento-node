@@ -3,6 +3,7 @@ TODO: Los archivos en controllers solo debe hacer el crud a la base de datos
 */
 
 const {storageModel} = require('../models'); /* todo: Esto funciona siempre y cuando la carpeta tenga un index, y este exporte cualquier elemento con el mismo nombre de la carpeta*/
+const PUBLIC_URL = process.env.PUBLIC_URL;
 
 /*
 * Obtener lista de la base de datos!
@@ -31,11 +32,12 @@ const createItem = async(req, res)=>{
     const {body, file} = req
     console.log(file);
     const fileData ={
-        filename: file.filename
+        filename: file.filename,
+        url: `${PUBLIC_URL}/${file.filename}`
     }
-    // const data = await storageModel.create({body});
+    const data = await storageModel.create(fileData);
     // console.log(data);
-    res.send({file})
+    res.send({data})
 };
 
 /*
