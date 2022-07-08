@@ -31,12 +31,14 @@ const getItem = (req, res)=>{};
 const createItem = async(req, res)=>{
     const {body, file} = req
     console.log(file);
+    console.log(file.filename);
     const fileData ={
-        filename: file.filename,
-        url: `${PUBLIC_URL}/${file.filename}`
+        url: `${PUBLIC_URL}/${file.filename}`,
+        filename: file.filename
     }
+    console.log(fileData);
     const data = await storageModel.create(fileData);
-    // console.log(data);
+    console.log(data);
     res.send({data})
 };
 
