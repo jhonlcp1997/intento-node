@@ -1,4 +1,5 @@
 const mongoose = require("mongoose"); //*siempe se va a requerir
+const mongooseDelete = require('mongoose-delete');
 
 const TracksScheme = new mongoose.Schema(
   {
@@ -47,4 +48,5 @@ const TracksScheme = new mongoose.Schema(
   }
 );
 
+TracksScheme.plugin(mongooseDelete, { overrideMethods: "all"});
 module.exports = mongoose.model("tracks", TracksScheme); //*Exporta el modelo de mongose con el nombre y su esquema

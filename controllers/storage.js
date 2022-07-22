@@ -3,6 +3,7 @@ TODO: Los archivos en controllers solo debe hacer el crud a la base de datos
 */
 
 const {storageModel} = require('../models'); /* todo: Esto funciona siempre y cuando la carpeta tenga un index, y este exporte cualquier elemento con el mismo nombre de la carpeta*/
+const { handleHttpError } = require("../utils/handleError");
 const PUBLIC_URL = process.env.PUBLIC_URL;
 
 /*
@@ -12,8 +13,12 @@ const PUBLIC_URL = process.env.PUBLIC_URL;
 */
 const getItems = async(req, res)=>{
     /* Debe tener algo tu solicitud o dará error*/
-    const data = await storageModel.find({});
-    res.send({data})
+    try {
+        const data = await storageModel.find({});
+        res.send({ data })
+    } catch (e) {
+        handleHttpError(res, 'Error_Get_Items')
+    }
 };
 
 /*
@@ -21,7 +26,16 @@ const getItems = async(req, res)=>{
 * @param {*} req
 * @param {*} res
 */
-const getItem = (req, res)=>{};
+const getItem = async(req, res)=>{
+    try {
+        req = matchedData(req);
+        const {id} = req;
+        const data = await storageModel.findById(id);
+        res.send({ data })
+    } catch (e) {
+        handleHttpError(res, "ERROR_GET_ITEM")
+    }
+};
 
 /*
 * Insertar un registro
@@ -47,13 +61,13 @@ const createItem = async(req, res)=>{
 * @param {*} req
 * @param {*} res
 */
-const updateItem = (req, res)=>{};
+const updateItem = async(req, res)=>{};
 
 /*
 * Eliminar un registro
 * @param {*} req
 * @param {*} res
 */
-const deleteItem = (req, res)=>{};
+const deleteItem = async(req, res)=>{};
 
 module.exports = ({getItems, getItem, createItem, updateItem, deleteItem});
