@@ -34,21 +34,36 @@ const registerCtrl = async (req, res) => {
  * @param {*} req 
  * @param {*} res 
  */
-
+    
 const loginCtrl = async (req, res) => {
     try {
         req = matchedData(req);
-        const user = await userModel.findOne({email: req.email});
+        const user = await userModel.findOne({email: req.email}).select('password name rol email');
         if(!user){
             handleHttpError(res, "USER_DOESN'T_EXIST", 404)
             return
         }
 
-        const hashPassword = user.password;
-
+        const hashPassword = user.get('password');
         
 
+        const check = await compare(req.password, hashPassword);
+
+        if(!check){
+            handleHttpError(res, "PASSWORD_INVALID", 401);
+            return
+        }
+
+        user.set('password', undefined, {strict:false});
+
+        const data = {
+            token: await tokenSing(user), 
+            user
+        }
+
+        res.send({data});
     } catch (e) {
+        console.log(e);
         handleHttpError(res, "ERROR_LOGIN_USER")
     }
 }

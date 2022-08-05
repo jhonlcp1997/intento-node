@@ -1,6 +1,7 @@
 const express = require('express');
 const { getItems, getItem, createItem, updateItem, deleteItem } = require('../controllers/tracks');
 const customHeader = require('../middlewares/customHeader');
+const authMiddleware = require('../middlewares/session');
 const router = express.Router();
 const { validatorCreateItem, validatorGetItem } = require('../validators/tracks');
 
@@ -8,7 +9,7 @@ const { validatorCreateItem, validatorGetItem } = require('../validators/tracks'
 
 
 // *Ruta que nos lista los items
-router.get('/', getItems);
+router.get('/',authMiddleware, getItems);
 
 // *Ruta que nos permite obtener un detalle de item
 router.get('/:id', validatorGetItem, getItem);
