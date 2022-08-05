@@ -1,14 +1,14 @@
 const express = require('express');
-const { matchedData, body } = require("express-validator");
-const { validatorRegister } = require('../validators/auth');
+const { validatorRegister, validatorLogin } = require('../validators/auth');
+const { registerCtrl, loginCtrl } = require('../controllers/auth');
 const router = express.Router();
 
 
 // Todo: CREAR UN REGISTRO
-router.post('/register', validatorRegister, (req, res)=>{
-    req = matchedData(req)
-    res.send({data:req});
-});
+router.post('/register', validatorRegister, registerCtrl);
+
+
+router.post('/login', validatorLogin , loginCtrl);
 
 
 module.exports = router;
