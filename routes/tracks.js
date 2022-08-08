@@ -1,6 +1,7 @@
 const express = require('express');
 const { getItems, getItem, createItem, updateItem, deleteItem } = require('../controllers/tracks');
 const customHeader = require('../middlewares/customHeader');
+const { checkRol } = require('../middlewares/rol');
 const authMiddleware = require('../middlewares/session');
 const router = express.Router();
 const { validatorCreateItem, validatorGetItem } = require('../validators/tracks');
@@ -15,7 +16,7 @@ router.get('/',authMiddleware, getItems);
 router.get('/:id', validatorGetItem, getItem);
 
 // *Ruta que nos crea un item
-router.post('/', validatorCreateItem, customHeader, createItem);
+router.post('/', authMiddleware, checkRol(["admin"]), validatorCreateItem, createItem);
 
 // *Ruta que nos permite actualizar un registro
 router.put('/:id',validatorGetItem, validatorCreateItem, updateItem);
