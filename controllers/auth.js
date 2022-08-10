@@ -37,8 +37,9 @@ const registerCtrl = async (req, res) => {
     
 const loginCtrl = async (req, res) => {
     try {
+        const body = matchedData(req);
         req = matchedData(req);
-        const user = await userModel.findOne({email: req.email}).select('password name rol email');
+        const user = await userModel.findOne({email: body.email});
         if(!user){
             handleHttpError(res, "USER_DOESN'T_EXIST", 404)
             return
@@ -46,8 +47,7 @@ const loginCtrl = async (req, res) => {
 
         const hashPassword = user.get('password');
         
-
-        const check = await compare(req.password, hashPassword);
+        const check = await compare(body.password, hashPassword);
 
         if(!check){
             handleHttpError(res, "PASSWORD_INVALID", 401);

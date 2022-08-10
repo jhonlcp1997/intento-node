@@ -3,9 +3,13 @@ const express = require("express");
 const cors = require("cors");
 const morganBody = require('morgan-body');
 
-const dbConnect = require('./config/mongo');
+const dbConnectNoSql = require('./config/mongo');
+const {dbConnectMySql} =require('./config/mysql')
+
 const { loggerStream } = require("./utils/handleLogger");
 const app = express();
+
+const ENGINE_DB = process.env.ENGINE_DB;
 
 app.use(cors());
 app.use(express.json());
@@ -34,4 +38,4 @@ app.listen(port, () => {
    console.log(' http://localhost:'+ port) ;
 });
 
-dbConnect() //*ejecutamos la funcion que conecta a la base de datos
+(ENGINE_DB === 'nosql') ? dbConnectNoSql(): dbConnectMySql() //*ejecutamos la funcion que conecta a la base de datos
