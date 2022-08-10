@@ -6,6 +6,7 @@ const { storageModel } = require('../models'); /* todo: Esto funciona siempre y 
 const { handleHttpError } = require("../utils/handleError");
 const { matchedData, body } = require("express-validator");
 const fs = require('fs');
+const getFunctions = require('../utils/handleFunctions');
 
 const PUBLIC_URL = process.env.PUBLIC_URL;
 const MEDIA_PATH = `${__dirname}/../storage`;
@@ -18,8 +19,9 @@ const MEDIA_PATH = `${__dirname}/../storage`;
 const getItems = async (req, res) => {
     /* Debe tener algo tu solicitud o dará error*/
     try {
-        const data = await storageModel.find({});
-        res.send({ data })
+        const functionId = getFunctions({modelo:storageModel});
+        const data = await functionId.find;
+        res.send({data})
     } catch (e) {
         handleHttpError(res, 'Error_List_Items')
     }
@@ -32,9 +34,9 @@ const getItems = async (req, res) => {
 */
 const getItem = async (req, res) => {
     try {
-        console.log({ req });
         const { id } = matchedData(req);
-        const data = await storageModel.findById(id);
+        const getFindId = getFunctions({modelo:storageModel, patron: id});
+        const data = await getFindId.findById;
         res.send({ data })
     } catch (e) {
         handleHttpError(res, "ERROR_DETAIL_ITEM-Storage")

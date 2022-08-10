@@ -40,6 +40,8 @@ const loginCtrl = async (req, res) => {
         const body = matchedData(req);
         req = matchedData(req);
         const user = await userModel.findOne({email: body.email});
+        console.log(await userModel.findOne({email: body.email}));
+
         if(!user){
             handleHttpError(res, "USER_DOESN'T_EXIST", 404)
             return
