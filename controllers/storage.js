@@ -77,8 +77,12 @@ const createItem = async (req, res) => {
 const deleteItem = async (req, res) => {
     try {
         const { id } = matchedData(req);
-        const dataFile = await storageModel.findById(id);
-        await storageModel.deleteOne(id);
+        // const dataFile = await storageModel.findById(id);
+        const getFindId = getFunctions({modelo:storageModel, patron: id});
+        const dataFile = await getFindId.findById;
+        await getFindId.deleteOne;
+        // await storageModel.deleteOne(id);
+        // await storageModel.destroy({where: {id: id}})
         const { filename } = dataFile;
         const filePath = `${MEDIA_PATH}/${filename}`;
 
@@ -92,6 +96,7 @@ const deleteItem = async (req, res) => {
         res.send({ data })
     } catch (e) {
         handleHttpError(res, "ERROR_DETAIL_ITEM-Storage")
+        console.log(e)
     }
 };
 
