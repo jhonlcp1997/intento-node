@@ -35,7 +35,7 @@ const getItems = async (req, res) => {
 const getItem = async (req, res) => {
     try {
         const { id } = matchedData(req);
-        const getFindId = getFunctions({modelo:storageModel, patron: id});
+        const getFindId = getFunctions({modelo:storageModel, id: id});
         const data = await getFindId.findById;
         res.send({ data })
     } catch (e) {
@@ -78,15 +78,16 @@ const deleteItem = async (req, res) => {
     try {
         const { id } = matchedData(req);
         // const dataFile = await storageModel.findById(id);
-        const getFindId = getFunctions({modelo:storageModel, patron: id});
+        const getFindId = getFunctions({modelo:storageModel, id: id});
         const dataFile = await getFindId.findById;
-        await getFindId.deleteOne;
+        
         // await storageModel.deleteOne(id);
         // await storageModel.destroy({where: {id: id}})
         const { filename } = dataFile;
         const filePath = `${MEDIA_PATH}/${filename}`;
-
         fs.unlinkSync(filePath);
+        
+        await getFunctions({modelo:storageModel, id: id, parse: id});
 
         const data = {
             filePath,
