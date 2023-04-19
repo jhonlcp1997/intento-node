@@ -12,7 +12,16 @@ const { userModel } = require('../models');
 
 const registerCtrl = async (req, res) => {
     try {
-        req = matchedData(req)
+        const originalRequest = matchedData(req);
+        req = matchedData(req);
+
+        const user = await userModel.findOne({email: originalRequest.email});
+
+        if(user){
+            handleHttpError(res, "USER_ALREADY_EXIST", 409);
+            return
+        }
+
         const password = await encrypt(req.password);
         const body = { ...req, password }
         const dataUser = await userModel.create(body);
@@ -40,7 +49,6 @@ const loginCtrl = async (req, res) => {
         const body = matchedData(req);
         req = matchedData(req);
         const user = await userModel.findOne({email: body.email});
-        console.log(await userModel.findOne({email: body.email}));
 
         if(!user){
             handleHttpError(res, "USER_DOESN'T_EXIST", 404)

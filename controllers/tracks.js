@@ -16,9 +16,11 @@ const getItems = async (req, res) => {
     try {
         /* Debe tener algo tu solicitud o dará error*/
         const user = req.user;
+        console.log(user)
         const data = await tracksModel.findAllData({});
         res.send({ data, user })
     } catch (e) {
+        console.log(e)
         handleHttpError(res, 'Error_Get_Items')
     }
 

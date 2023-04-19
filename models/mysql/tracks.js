@@ -34,9 +34,9 @@ const Tracks = sequelize.define(
     mediaId: {
       type: DataTypes.STRING,
     },
-    role: {
-      type: DataTypes.ENUM(["user", "admin"]),
-    },
+    // role: {
+    //   type: DataTypes.ENUM(["user", "admin"]),
+    // },
   },
   {
     timestamps: true,
